@@ -1,0 +1,74 @@
+# =========================
+# Unity generated folders
+# =========================
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+MemoryCaptures/
+
+# =========================
+# Unity cache / artifacts
+# =========================
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+UpgradeLog.htm
+
+# =========================
+# Unity3D generated meta files (optional rule tweak)
+# =========================
+# IMPORTANT: Keep .meta files!
+# Do NOT ignore *.meta
+
+# =========================
+# Crash reports
+# =========================
+sysinfo.txt
+
+# =========================
+# Build outputs
+# =========================
+*.apk
+*.aab
+*.ipa
+*.app
+
+# =========================
+# MacOS
+# =========================
+.DS_Store
+
+# =========================
+# Windows
+# =========================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================
+# Visual Studio / Rider
+# =========================
+.vs/
+.idea/
+*.sln.iml
+.vsconfig
+
+# =========================
+# Gradle (Android)
+# =========================
+.gradle/
