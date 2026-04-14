@@ -5,6 +5,8 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public GameObject startPanel;
+    private bool gameStarted = false;
 
     public bool IsGameOver { get; private set; }
 
@@ -41,11 +43,18 @@ public class GameManager : MonoBehaviour
 
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
+
+        if (startPanel != null)
+            startPanel.SetActive(true);
+
+        Time.timeScale = 0f; // Pause game at start
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (!gameStarted) return;
+
         if (IsGameOver)
         {
             if (Input.GetMouseButtonDown(0))
@@ -61,6 +70,16 @@ public class GameManager : MonoBehaviour
 
         if(scoreText != null)
             scoreText.text = "Score: " + Mathf.FloorToInt(score);
+    }
+
+    public void StartGame()
+    {
+        gameStarted = true;
+
+        if (startPanel != null)
+            startPanel.SetActive(false);
+
+        Time.timeScale = 1f; // start game
     }
 
     public void GameOver()
