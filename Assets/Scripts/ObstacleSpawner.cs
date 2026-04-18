@@ -41,7 +41,7 @@ public class ObstacleSpawner : MonoBehaviour
         float xPos = lane * laneDistance;
         float zPos = player.position.z + spawnDistanceAhead;
 
-        Vector3 spawnPos = new Vector3(xPos, 1f, zPos);
+        Vector3 spawnPos = new Vector3(xPos, 0f, zPos);
         GameObject obstacle = Instantiate(obstaclePrefab, spawnPos, Quaternion.identity);
 
         DestroyBehindPlayer cleaner = obstacle.GetComponent<DestroyBehindPlayer>();
