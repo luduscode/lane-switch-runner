@@ -14,6 +14,13 @@ public class PlayerController : MonoBehaviour
     private int currentLane = 0; // -1 for left, 0 for center, 1 for right
     private bool isAlive = true;
 
+    private Animator characterAnimator;
+
+    void Start()
+    {
+        characterAnimator = GetComponentInChildren<Animator>();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -59,8 +66,12 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.CompareTag("Obstacle"))
         {
             isAlive = false;
+
+            if (characterAnimator != null)
+                characterAnimator.speed = 0f; // Stop running animation on death
+
             GameManager.Instance.GameOver();
-        }    
+        } 
     }
 
     public bool IsAlive()
