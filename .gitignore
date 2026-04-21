@@ -9,6 +9,7 @@
 [Ll]ogs/
 UserSettings/
 MemoryCaptures/
+_Recovery/
 
 # =========================
 # Unity cache / artifacts
@@ -17,6 +18,7 @@ MemoryCaptures/
 *.unityproj
 *.sln
 *.suo
+_Recovery.meta
 *.tmp
 *.user
 *.userprefs

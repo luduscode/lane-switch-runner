@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     [Header("Score")]
     public float scoreMultiplier = 10f;
 
+    [Header("Audio")]
+    public AudioSource musicSource;
+
     private float score;
     private int bestScore;
     private PlayerController playerController;
@@ -79,6 +82,9 @@ public class GameManager : MonoBehaviour
         if (startPanel != null)
             startPanel.SetActive(false);
 
+        if (musicSource != null)
+            musicSource.Play();
+
         Time.timeScale = 1f; // start game
     }
 
@@ -94,6 +100,9 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("BestScore", bestScore);
             PlayerPrefs.Save();
         }
+
+        if (musicSource != null && musicSource.isPlaying)
+            musicSource.Stop();
 
         if (gameOverPanel != null)
             gameOverPanel.SetActive(true);
