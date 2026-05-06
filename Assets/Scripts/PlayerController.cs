@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Audio")]
+    public AudioSource laneSwitchAudioSource;
+    public AudioClip laneSwitchClip;
+    public float laneSwitchPitch = 1.35f;
+
     [Header("Lane Settings")]
     public float laneDistance = 2.5f;
     public float laneSwitchSpeed = 12f;
@@ -33,19 +38,59 @@ public class PlayerController : MonoBehaviour
 
     void HandleInput()
     {
+        laneSwitchAudioSource.pitch = laneSwitchPitch;
+
         // Keyboard for testing in editor
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
-            currentLane = Mathf.Max(-1, currentLane - 1);
+        {
+            int targetLane = Mathf.Max(-1, currentLane - 1);
+            if(targetLane != currentLane)
+            {
+                currentLane = targetLane;
+
+                if (laneSwitchAudioSource != null && laneSwitchClip != null)
+                    laneSwitchAudioSource.PlayOneShot(laneSwitchClip);
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
-            currentLane = Mathf.Min(1, currentLane + 1);
+        {
+            int targetLane = Mathf.Min(1, currentLane + 1);
+            if (targetLane != currentLane)
+            {
+                currentLane = targetLane;
+
+                if (laneSwitchAudioSource != null && laneSwitchClip != null)
+                    laneSwitchAudioSource.PlayOneShot(laneSwitchClip);
+            }
+        }
+
 
         // Touch input for mobile
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             if (Input.GetTouch(0).position.x < Screen.width / 2f)
-                currentLane = Mathf.Max(-1, currentLane - 1);
+            {
+                int targetLane = Mathf.Max(-1, currentLane - 1);
+                if (targetLane != currentLane)
+                {
+                    currentLane = targetLane;
+
+                    if (laneSwitchAudioSource != null && laneSwitchClip != null)
+                        laneSwitchAudioSource.PlayOneShot(laneSwitchClip);
+                }
+            }
             else
-                currentLane = Mathf.Min(1, currentLane + 1);
+            {
+                int targetLane = Mathf.Min(1, currentLane + 1);
+                if (targetLane != currentLane)
+                {
+                    currentLane = targetLane;
+
+                    if (laneSwitchAudioSource != null && laneSwitchClip != null)
+                        laneSwitchAudioSource.PlayOneShot(laneSwitchClip);
+                }
+            }
         }
     }
 
