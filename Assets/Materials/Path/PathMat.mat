@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6205380385562584966
+--- !u!114 &-3821310656557525228
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,8 +40,8 @@ Material:
     m_TexEnvs:
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: e87219c4214ce324db05cbc174727d19, type: 3}
-        m_Scale: {x: 5, y: 10}
-        m_Offset: {x: 1, y: 0}
+        m_Scale: {x: 5, y: 5}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -64,8 +64,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: e87219c4214ce324db05cbc174727d19, type: 3}
-        m_Scale: {x: 5, y: 10}
-        m_Offset: {x: 1, y: 0}
+        m_Scale: {x: 5, y: 5}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -129,8 +129,8 @@ Material:
     - _XRMotionVectorsPass: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.9811321, g: 0.6212974, b: 0.032395888, a: 1}
-    - _Color: {r: 0.9811321, g: 0.62129736, b: 0.032395888, a: 1}
+    - _BaseColor: {r: 0.8490566, g: 0.523242, b: 0.19624422, a: 1}
+    - _Color: {r: 0.8490566, g: 0.52324194, b: 0.19624418, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
