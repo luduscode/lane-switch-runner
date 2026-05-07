@@ -106,11 +106,15 @@ public class PlayerController : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, targetPosition, laneSwitchSpeed * Time.deltaTime);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if(collision.gameObject.CompareTag("Obstacle"))
+        if(other.CompareTag("Obstacle"))
         {
             isAlive = false;
+
+            Animator obstacleAnimator = other.GetComponentInChildren<Animator>();
+            if (obstacleAnimator != null)
+                obstacleAnimator.speed = 0f; // Stop obstacle animation on collision
 
             if (characterAnimator != null)
                 characterAnimator.speed = 0f; // Stop running animation on death
