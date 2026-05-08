@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ObstacleSpawner : MonoBehaviour
 {
-    public GameObject obstaclePrefab;
+    public GameObject[] obstaclePrefabs;
     public Transform player;
 
     public float laneDistance = 2.5f;
@@ -29,6 +29,9 @@ public class ObstacleSpawner : MonoBehaviour
 
     void SpawnObstacle()
     {
+        if (obstaclePrefabs == null || obstaclePrefabs.Length == 0)
+            return;
+
         int lane;
 
         do
@@ -42,7 +45,9 @@ public class ObstacleSpawner : MonoBehaviour
         float zPos = player.position.z + spawnDistanceAhead;
 
         Vector3 spawnPos = new Vector3(xPos, 0f, zPos);
-        GameObject obstacle = Instantiate(obstaclePrefab, spawnPos, Quaternion.identity);
+
+        GameObject selectedObstacle = obstaclePrefabs[Random.Range(0, obstaclePrefabs.Length)];
+        GameObject obstacle = Instantiate(selectedObstacle, spawnPos, Quaternion.identity);
 
         DestroyBehindPlayer cleaner = obstacle.GetComponent<DestroyBehindPlayer>();
         if (cleaner != null)
