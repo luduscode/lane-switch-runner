@@ -110,16 +110,23 @@ public class PlayerController : MonoBehaviour
     {
         if(other.CompareTag("Obstacle"))
         {
-            isAlive = false;
+            //isAlive = false;
 
-            Animator obstacleAnimator = other.GetComponentInChildren<Animator>();
-            if (obstacleAnimator != null)
-                obstacleAnimator.speed = 0f; // Stop obstacle animation on collision
+            //Animator obstacleAnimator = other.GetComponentInChildren<Animator>();
+            //if (obstacleAnimator != null)
+            //    obstacleAnimator.speed = 0f; // Stop obstacle animation on collision
 
-            if (characterAnimator != null)
-                characterAnimator.speed = 0f; // Stop running animation on death
+            //if (characterAnimator != null)
+            //    characterAnimator.speed = 0f; // Stop running animation on death
 
-            GameManager.Instance.GameOver();
+            ExplodeOnHit explosion = other.GetComponentInParent<ExplodeOnHit>();
+            if (explosion != null)
+            {
+                Debug.Log("exploding");
+                explosion.Explode();
+            }
+
+            //GameManager.Instance.GameOver();
         } 
     }
 
