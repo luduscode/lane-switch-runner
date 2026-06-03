@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
     [Header("Audio")]
     public AudioSource laneSwitchAudioSource;
     public AudioClip laneSwitchClip;
+    public AudioClip damageGruntClip;
     public float laneSwitchPitch = 1.35f;
 
     [Header("Lane Settings")]
@@ -115,9 +116,15 @@ public class PlayerController : MonoBehaviour
             //Animator obstacleAnimator = other.GetComponentInChildren<Animator>();
             //if (obstacleAnimator != null)
             //    obstacleAnimator.speed = 0f; // Stop obstacle animation on collision
+            if(damageGruntClip != null)
+            {
+                //laneSwitchAudioSource.pitch = Random.Range(1.75f, 2f);
+                laneSwitchAudioSource.PlayOneShot(damageGruntClip);
+                //laneSwitchAudioSource.pitch = 1f;
+            }
 
-            //if (characterAnimator != null)
-            //    characterAnimator.speed = 0f; // Stop running animation on death
+            if (characterAnimator != null)
+                characterAnimator.SetTrigger("Stumble");
 
             ExplodeOnHit explosion = other.GetComponentInParent<ExplodeOnHit>();
             if (explosion != null)
