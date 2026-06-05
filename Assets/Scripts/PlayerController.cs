@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,6 +18,15 @@ public class PlayerController : MonoBehaviour
     public float speedIncreaseRate = 0.05f;
     public float maxSpeed = 18f;
 
+    [Header("Health")]
+    public int maxHealth = 3;
+    public int currentHealth;
+    public float damageCooldown = 1f;
+
+    private bool canTakeDamage = true;
+
+    public Slider healthBar;
+
     private int currentLane = 0; // -1 for left, 0 for center, 1 for right
     private bool isAlive = true;
 
@@ -25,6 +35,13 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         characterAnimator = GetComponentInChildren<Animator>();
+        currentHealth = maxHealth;
+
+        if(healthBar != null)
+        {
+            healthBar.maxValue = maxHealth;
+            healthBar.value = currentHealth;
+        }
     }
 
     // Update is called once per frame
@@ -111,7 +128,7 @@ public class PlayerController : MonoBehaviour
     {
         if(other.CompareTag("Obstacle"))
         {
-            //isAlive = false;
+            TakeDamage(1);
 
             //Animator obstacleAnimator = other.GetComponentInChildren<Animator>();
             //if (obstacleAnimator != null)
@@ -129,12 +146,55 @@ public class PlayerController : MonoBehaviour
             ExplodeOnHit explosion = other.GetComponentInParent<ExplodeOnHit>();
             if (explosion != null)
             {
-                Debug.Log("exploding");
                 explosion.Explode();
             }
 
             //GameManager.Instance.GameOver();
         } 
+    }
+
+    void TakeDamage(int damage)
+    {
+        if (!canTakeDamage) return;
+
+        currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0);
+
+        Debug.Log("Health: " + currentHealth);
+
+        if(healthBar != null)
+        {
+            healthBar.value = currentHealth;
+        }
+
+        if (characterAnimator != null)
+            characterAnimator.SetTrigger("Stumble");
+
+        StartCoroutine(DamageCooldown());
+
+        if(currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    System.Collections.IEnumerator DamageCooldown()
+    {
+        canTakeDamage = false;
+        yield return new WaitForSeconds(damageCooldown);
+        canTakeDamage = true;
+    }
+
+    void Die()
+    {
+        isAlive = false;
+
+        if(characterAnimator != null)
+        {
+            characterAnimator.speed = 0f;
+        }
+
+        GameManager.Instance.GameOver();
     }
 
     public bool IsAlive()
