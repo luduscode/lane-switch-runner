@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -25,7 +24,6 @@ public class PlayerController : MonoBehaviour
 
     private bool canTakeDamage = true;
 
-    public Slider healthBar;
 
     private int currentLane = 0; // -1 for left, 0 for center, 1 for right
     private bool isAlive = true;
@@ -37,11 +35,8 @@ public class PlayerController : MonoBehaviour
         characterAnimator = GetComponentInChildren<Animator>();
         currentHealth = maxHealth;
 
-        if(healthBar != null)
-        {
-            healthBar.maxValue = maxHealth;
-            healthBar.value = currentHealth;
-        }
+        GameManager.Instance.UpdateHealth(currentHealth, maxHealth);
+
     }
 
     // Update is called once per frame
@@ -160,12 +155,7 @@ public class PlayerController : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);
 
-        Debug.Log("Health: " + currentHealth);
-
-        if(healthBar != null)
-        {
-            healthBar.value = currentHealth;
-        }
+        GameManager.Instance.UpdateHealth(currentHealth, maxHealth);
 
         if (characterAnimator != null)
             characterAnimator.SetTrigger("Stumble");

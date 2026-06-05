@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
     public GameObject gameOverPanel;
+    public Slider healthBar;
+
 
     [Header("Score")]
     public float scoreMultiplier = 10f;
@@ -50,6 +53,9 @@ public class GameManager : MonoBehaviour
         if (startPanel != null)
             startPanel.SetActive(true);
 
+        if (healthBar != null)
+            healthBar.gameObject.SetActive(false);
+
         Time.timeScale = 0f; // Pause game at start
     }
 
@@ -82,6 +88,9 @@ public class GameManager : MonoBehaviour
         if (startPanel != null)
             startPanel.SetActive(false);
 
+        if (healthBar != null)
+            healthBar.gameObject.SetActive(true);
+
         if (musicSource != null)
             musicSource.Play();
 
@@ -111,5 +120,15 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void UpdateHealth(int currentHealth, int maxHealth)
+    {
+        if (healthBar != null)
+        {
+            healthBar.maxValue = maxHealth;
+            healthBar.value = currentHealth;
+        }
+
     }
 }
