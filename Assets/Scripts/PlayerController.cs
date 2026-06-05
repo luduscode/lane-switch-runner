@@ -12,6 +12,11 @@ public class PlayerController : MonoBehaviour
     public float laneDistance = 2.5f;
     public float laneSwitchSpeed = 12f;
 
+    [Header("Jump")]
+    public float jumpForce = 4f;
+    public bool isGrounded = true;
+    private Rigidbody rb;
+
     [Header("Movement")]
     public float forwardSpeed = 8f;
     public float speedIncreaseRate = 0.05f;
@@ -21,12 +26,15 @@ public class PlayerController : MonoBehaviour
     public int maxHealth = 3;
     public int currentHealth;
     public float damageCooldown = 1f;
-
     private bool canTakeDamage = true;
-
 
     private int currentLane = 0; // -1 for left, 0 for center, 1 for right
     private bool isAlive = true;
+
+    // For swiping on mobile
+    private Vector2 touchStartPos;
+    private Vector2 touchEndPos;
+    public float swipeThreshold = 75f;
 
     private Animator characterAnimator;
 
@@ -37,6 +45,7 @@ public class PlayerController : MonoBehaviour
 
         GameManager.Instance.UpdateHealth(currentHealth, maxHealth);
 
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -51,59 +60,100 @@ public class PlayerController : MonoBehaviour
 
     void HandleInput()
     {
-        laneSwitchAudioSource.pitch = laneSwitchPitch;
+        if (laneSwitchAudioSource != null)
+            laneSwitchAudioSource.pitch = laneSwitchPitch;
 
         // Keyboard for testing in editor
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+        if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) && isGrounded)
         {
-            int targetLane = Mathf.Max(-1, currentLane - 1);
-            if(targetLane != currentLane)
-            {
-                currentLane = targetLane;
-
-                if (laneSwitchAudioSource != null && laneSwitchClip != null)
-                    laneSwitchAudioSource.PlayOneShot(laneSwitchClip);
-            }
+            MoveLeft();
         }
 
-        if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+        if ((Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) && isGrounded)
         {
-            int targetLane = Mathf.Min(1, currentLane + 1);
-            if (targetLane != currentLane)
-            {
-                currentLane = targetLane;
-
-                if (laneSwitchAudioSource != null && laneSwitchClip != null)
-                    laneSwitchAudioSource.PlayOneShot(laneSwitchClip);
-            }
+            MoveRight();
         }
 
-
-        // Touch input for mobile
-        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded)
         {
-            if (Input.GetTouch(0).position.x < Screen.width / 2f)
-            {
-                int targetLane = Mathf.Max(-1, currentLane - 1);
-                if (targetLane != currentLane)
-                {
-                    currentLane = targetLane;
+            Jump();
+        }
 
-                    if (laneSwitchAudioSource != null && laneSwitchClip != null)
-                        laneSwitchAudioSource.PlayOneShot(laneSwitchClip);
+        // Touch input for mobile: swipe left/right/up
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                touchStartPos = touch.position;
+            }
+
+            if (touch.phase == TouchPhase.Ended)
+            {
+                touchEndPos = touch.position;
+
+                Vector2 swipe = touchEndPos - touchStartPos;
+
+                if (swipe.magnitude < swipeThreshold)
+                    return;
+
+                if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y))
+                {
+                    // Horizontal swipe
+                    if (swipe.x > 0 && isGrounded)
+                        MoveRight();
+                    else if (swipe.x < 0 && isGrounded)
+                        MoveLeft();
+                }
+                else
+                {
+                    // Vertical swipe
+                    if (swipe.y > 0 && isGrounded)
+                        Jump();
                 }
             }
-            else
-            {
-                int targetLane = Mathf.Min(1, currentLane + 1);
-                if (targetLane != currentLane)
-                {
-                    currentLane = targetLane;
+        }
+    }
 
-                    if (laneSwitchAudioSource != null && laneSwitchClip != null)
-                        laneSwitchAudioSource.PlayOneShot(laneSwitchClip);
-                }
-            }
+    void Jump()
+    {
+        isGrounded = false;
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+
+        if (characterAnimator != null)
+            characterAnimator.SetTrigger("Jump");
+    }
+
+    void MoveLeft()
+    {
+        int targetLane = Mathf.Max(-1, currentLane - 1);
+
+        if (targetLane != currentLane)
+        {
+            currentLane = targetLane;
+            PlayLaneSwitchSound();
+        }
+    }
+
+    void MoveRight()
+    {
+        int targetLane = Mathf.Min(1, currentLane + 1);
+
+        if (targetLane != currentLane)
+        {
+            currentLane = targetLane;
+            PlayLaneSwitchSound();
+        }
+    }
+
+    void PlayLaneSwitchSound()
+    {
+        if (laneSwitchAudioSource != null && laneSwitchClip != null)
+        {
+            laneSwitchAudioSource.pitch = laneSwitchPitch;
+            laneSwitchAudioSource.PlayOneShot(laneSwitchClip);
+            laneSwitchAudioSource.pitch = 1f;
         }
     }
 
@@ -119,23 +169,26 @@ public class PlayerController : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, targetPosition, laneSwitchSpeed * Time.deltaTime);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Obstacle"))
+        if (other.CompareTag("Obstacle"))
         {
             TakeDamage(1);
 
-            //Animator obstacleAnimator = other.GetComponentInChildren<Animator>();
-            //if (obstacleAnimator != null)
-            //    obstacleAnimator.speed = 0f; // Stop obstacle animation on collision
-            if(damageGruntClip != null)
+            if (damageGruntClip != null && isAlive)
             {
-                //laneSwitchAudioSource.pitch = Random.Range(1.75f, 2f);
                 laneSwitchAudioSource.PlayOneShot(damageGruntClip);
-                //laneSwitchAudioSource.pitch = 1f;
             }
 
-            if (characterAnimator != null)
+            if (characterAnimator != null && isAlive)
                 characterAnimator.SetTrigger("Stumble");
 
             ExplodeOnHit explosion = other.GetComponentInParent<ExplodeOnHit>();
@@ -143,14 +196,12 @@ public class PlayerController : MonoBehaviour
             {
                 explosion.Explode();
             }
-
-            //GameManager.Instance.GameOver();
-        } 
+        }
     }
 
     void TakeDamage(int damage)
     {
-        if (!canTakeDamage) return;
+        if (!isAlive || !canTakeDamage) return;
 
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0);
@@ -162,7 +213,7 @@ public class PlayerController : MonoBehaviour
 
         StartCoroutine(DamageCooldown());
 
-        if(currentHealth <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -177,9 +228,11 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
+        if (!isAlive) return;
+
         isAlive = false;
 
-        if(characterAnimator != null)
+        if (characterAnimator != null)
         {
             characterAnimator.speed = 0f;
         }

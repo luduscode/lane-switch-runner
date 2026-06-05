@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
     public GameObject gameOverPanel;
-    public Slider healthBar;
+    public GameObject healthUI;
+    private Slider healthBar;
 
 
     [Header("Score")]
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
         IsGameOver = false;
         score = 0f;
         bestScore = PlayerPrefs.GetInt("BestScore", 0);
+        healthBar = healthUI.GetComponentInChildren<Slider>();
 
         if (highScoreText != null)
             highScoreText.text = "High Score: " + Mathf.FloorToInt(bestScore);
@@ -54,7 +56,7 @@ public class GameManager : MonoBehaviour
             startPanel.SetActive(true);
 
         if (healthBar != null)
-            healthBar.gameObject.SetActive(false);
+            healthUI.SetActive(false);
 
         Time.timeScale = 0f; // Pause game at start
     }
@@ -89,7 +91,7 @@ public class GameManager : MonoBehaviour
             startPanel.SetActive(false);
 
         if (healthBar != null)
-            healthBar.gameObject.SetActive(true);
+            healthUI.SetActive(true);
 
         if (musicSource != null)
             musicSource.Play();
