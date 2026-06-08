@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Audio")]
+    public AudioSource footstepAudioSource;
+    public AudioClip[] footstepClips;
     public AudioSource laneSwitchAudioSource;
     public AudioClip laneSwitchClip;
     public AudioClip damageGruntClip;
@@ -243,5 +245,21 @@ public class PlayerController : MonoBehaviour
     public bool IsAlive()
     {
         return isAlive;
+    }
+
+    public void PlayFootstep()
+    {
+        if (footstepAudioSource == null || footstepClips == null || footstepClips.Length == 0)
+        {
+            return;
+        }
+
+        footstepAudioSource.pitch = Random.Range(0.95f, 1.05f);
+
+        footstepAudioSource.PlayOneShot(
+            footstepClips[Random.Range(0, footstepClips.Length)]
+        );
+
+        footstepAudioSource.pitch = 1f;
     }
 }
