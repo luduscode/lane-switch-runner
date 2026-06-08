@@ -7,7 +7,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip[] footstepClips;
     public AudioSource laneSwitchAudioSource;
     public AudioClip laneSwitchClip;
-    public AudioClip damageGruntClip;
+    public AudioClip[] damageGruntClips;
+    public AudioClip[] laneSwitchGrunts;
+    public AudioClip[] jumpGrunts;
     public float laneSwitchPitch = 1.35f;
 
     [Header("Lane Settings")]
@@ -79,6 +81,7 @@ public class PlayerController : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && isGrounded)
         {
             Jump();
+            PlayJumpSound();
         }
 
         // Touch input for mobile: swipe left/right/up
@@ -112,9 +115,20 @@ public class PlayerController : MonoBehaviour
                 {
                     // Vertical swipe
                     if (swipe.y > 0 && isGrounded)
+                    {
                         Jump();
+                        PlayJumpSound();
+                    }
                 }
             }
+        }
+    }
+
+    void PlayJumpSound()
+    {
+        if(laneSwitchAudioSource != null && jumpGrunts != null)
+        {
+            laneSwitchAudioSource.PlayOneShot(jumpGrunts[Random.Range(0, jumpGrunts.Length)]);
         }
     }
 
@@ -155,6 +169,7 @@ public class PlayerController : MonoBehaviour
         {
             laneSwitchAudioSource.pitch = laneSwitchPitch;
             laneSwitchAudioSource.PlayOneShot(laneSwitchClip);
+            laneSwitchAudioSource.PlayOneShot(laneSwitchGrunts[Random.Range(0, laneSwitchGrunts.Length)]);
             laneSwitchAudioSource.pitch = 1f;
         }
     }
@@ -185,9 +200,9 @@ public class PlayerController : MonoBehaviour
         {
             TakeDamage(1);
 
-            if (damageGruntClip != null && isAlive)
+            if (damageGruntClips != null && damageGruntClips.Length != 0 && isAlive)
             {
-                laneSwitchAudioSource.PlayOneShot(damageGruntClip);
+                laneSwitchAudioSource.PlayOneShot(damageGruntClips[Random.Range(0, damageGruntClips.Length)]);
             }
 
             if (characterAnimator != null && isAlive)
