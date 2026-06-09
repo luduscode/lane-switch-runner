@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI highScoreText;
     public GameObject gameOverPanel;
+    public TextMeshProUGUI gameOverHighScoreText;
+    public TextMeshProUGUI gameOverFinalScoreText;
     public GameObject healthUI;
     private Slider healthBar;
 
@@ -116,7 +118,11 @@ public class GameManager : MonoBehaviour
             musicSource.Stop();
 
         if (gameOverPanel != null)
+        {
             gameOverPanel.SetActive(true);
+            gameOverFinalScoreText.text = "Score: " + score;
+            gameOverHighScoreText.text = "Best: " + bestScore;
+        }
     }
 
     public void RestartGame()
