@@ -5302,7 +5302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea9124802764eb4eab8c02dad722828, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FootstepEventReceiver
-  playerController: {fileID: 0}
+  playerController: {fileID: 1021656656}
 --- !u!1 &2022133279
 GameObject:
   m_ObjectHideFlags: 0
