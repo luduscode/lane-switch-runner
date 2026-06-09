@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 828b2335b44fb8943b65a627f7bfbce7
+guid: 482f0387a58c7ea498f9ebb3c7ac2994
 AudioImporter:
   externalObjects: {}
   serializedVersion: 8
@@ -21,3 +21,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381288
+  packageName: Female Human Voice Pack - SFX
+  packageVersion: 1.0
+  assetPath: Assets/Timofei Shukshin/Human_VO_Female/WAV_Human_VO_Female_Attack_Fast-004.wav
+  uploadId: 919290

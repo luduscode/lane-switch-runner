@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ffe6ae111f7187a4c8db34232dda2a8e
+guid: 53b636ea0d91dd045a954540cb7986e3
 AudioImporter:
   externalObjects: {}
   serializedVersion: 8
@@ -21,3 +21,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381288
+  packageName: Female Human Voice Pack - SFX
+  packageVersion: 1.0
+  assetPath: Assets/Timofei Shukshin/Human_VO_Female/WAV_Human_VO_Female_Damaged-001.wav
+  uploadId: 919290

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4c434def972810d4cb9b2cc053fe7c1d
+guid: dba20c529abbcc3438638a7a1f617fc1
 AudioImporter:
   externalObjects: {}
   serializedVersion: 8
@@ -21,3 +21,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381288
+  packageName: Female Human Voice Pack - SFX
+  packageVersion: 1.0
+  assetPath: Assets/Timofei Shukshin/Human_VO_Female/WAV_Human_VO_Female_Death-010.wav
+  uploadId: 919290

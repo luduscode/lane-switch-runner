@@ -2929,16 +2929,23 @@ MonoBehaviour:
   laneSwitchAudioSource: {fileID: 1021656658}
   laneSwitchClip: {fileID: 8300000, guid: 5bf8badd923abc1489f715f807ba9c5d, type: 3}
   damageGruntClips:
-  - {fileID: 8300000, guid: a0969221ed0822d4e8331702254ce599, type: 3}
-  - {fileID: 8300000, guid: 3d23b61b0f78d5c419e9ba62d1faf29e, type: 3}
-  - {fileID: 8300000, guid: 828b2335b44fb8943b65a627f7bfbce7, type: 3}
-  - {fileID: 8300000, guid: 7ac4b35afedc5e14bb534c4e7f724e2b, type: 3}
+  - {fileID: 8300000, guid: 53b636ea0d91dd045a954540cb7986e3, type: 3}
+  - {fileID: 8300000, guid: 4f9c074477d294748b4013655638f1d1, type: 3}
+  - {fileID: 8300000, guid: b11d0a3ea64723646b176bce0b03534c, type: 3}
+  - {fileID: 8300000, guid: d18ebc7591834334893f749282609af2, type: 3}
   laneSwitchGrunts:
-  - {fileID: 8300000, guid: 4c434def972810d4cb9b2cc053fe7c1d, type: 3}
-  - {fileID: 8300000, guid: d01a54ba90d609746888a8d7e834b847, type: 3}
+  - {fileID: 8300000, guid: 82a74087b92a4ff49b7097912f3ce7bb, type: 3}
+  - {fileID: 8300000, guid: b2e91f7e83ebb3a4d9eb55d13ae5ac98, type: 3}
+  - {fileID: 8300000, guid: b5a6552072fde0149859e3811edc0e61, type: 3}
+  - {fileID: 8300000, guid: 482f0387a58c7ea498f9ebb3c7ac2994, type: 3}
   jumpGrunts:
-  - {fileID: 8300000, guid: ce5d274ea87fd394aaf840038425aaff, type: 3}
-  - {fileID: 8300000, guid: ffe6ae111f7187a4c8db34232dda2a8e, type: 3}
+  - {fileID: 8300000, guid: 786e55c4405d48245934d278a920f07e, type: 3}
+  - {fileID: 8300000, guid: bc932427d4769164ea822442c39f0e1b, type: 3}
+  - {fileID: 8300000, guid: 377a7fc13a70ccf4f89f5f27d9a20b94, type: 3}
+  - {fileID: 8300000, guid: 795849c7c79d9ec45975e75d3995e534, type: 3}
+  deathGruntClips:
+  - {fileID: 8300000, guid: 7332796ae1dad5047b4b56d2549ba622, type: 3}
+  - {fileID: 8300000, guid: dba20c529abbcc3438638a7a1f617fc1, type: 3}
   laneSwitchPitch: 1
   laneDistance: 2.5
   laneSwitchSpeed: 12

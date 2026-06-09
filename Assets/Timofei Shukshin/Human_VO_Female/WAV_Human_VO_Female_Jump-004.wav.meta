@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3d23b61b0f78d5c419e9ba62d1faf29e
+guid: 795849c7c79d9ec45975e75d3995e534
 AudioImporter:
   externalObjects: {}
   serializedVersion: 8
@@ -21,3 +21,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 381288
+  packageName: Female Human Voice Pack - SFX
+  packageVersion: 1.0
+  assetPath: Assets/Timofei Shukshin/Human_VO_Female/WAV_Human_VO_Female_Jump-004.wav
+  uploadId: 919290

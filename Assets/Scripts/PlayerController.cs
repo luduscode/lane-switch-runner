@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip[] damageGruntClips;
     public AudioClip[] laneSwitchGrunts;
     public AudioClip[] jumpGrunts;
+    public AudioClip[] deathGruntClips;
     public float laneSwitchPitch = 1.35f;
 
     [Header("Lane Settings")]
@@ -45,6 +46,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         characterAnimator = GetComponentInChildren<Animator>();
+        if (characterAnimator != null)
+            characterAnimator.SetBool("isAlive", true);
         currentHealth = maxHealth;
 
         GameManager.Instance.UpdateHealth(currentHealth, maxHealth);
@@ -251,11 +254,23 @@ public class PlayerController : MonoBehaviour
 
         if (characterAnimator != null)
         {
-            characterAnimator.speed = 0f;
+            //characterAnimator.speed = 0f;
+            characterAnimator.SetBool("isAlive", false);
         }
+
+        PlayDeathGrunt();
 
         GameManager.Instance.GameOver();
     }
+
+    void PlayDeathGrunt()
+    {
+        if(laneSwitchAudioSource != null && deathGruntClips != null)
+        {
+            laneSwitchAudioSource.PlayOneShot(deathGruntClips[Random.Range(0, deathGruntClips.Length)]);
+        }
+    }
+
 
     public bool IsAlive()
     {
