@@ -1,7 +1,10 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,10 +29,15 @@ public class GameManager : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource musicSource;
+    public AudioSource gameOverAudioSource;
+    public AudioClip gameOverMusicClip;
 
     private float score;
     private int bestScore;
     private PlayerController playerController;
+
+    public Volume globalVolume;
+    private Vignette vignette;
 
     void Awake()
     {
@@ -59,8 +67,15 @@ public class GameManager : MonoBehaviour
 
         if (healthBar != null)
             healthUI.SetActive(false);
-
+        
         Time.timeScale = 0f; // Pause game at start
+
+        globalVolume.profile.TryGet(out vignette);
+        if(vignette != null)
+        {
+            vignette.intensity.value = 0f;
+        }
+
     }
 
     // Update is called once per frame
@@ -117,11 +132,36 @@ public class GameManager : MonoBehaviour
         if (musicSource != null && musicSource.isPlaying)
             musicSource.Stop();
 
+        PlayGameOverMusic();
+
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
             gameOverFinalScoreText.text = ((int)score).ToString();
             gameOverHighScoreText.text = bestScore.ToString();
+        }
+
+        if(vignette != null)
+        {
+            StartCoroutine(FadeVignette());
+        }
+    }
+
+    void PlayGameOverMusic()
+    {
+        if(gameOverAudioSource != null && gameOverMusicClip != null)
+        {
+            gameOverAudioSource.PlayOneShot(gameOverMusicClip);
+        }
+    }
+
+    IEnumerator FadeVignette()
+    {
+        float vignetteFadeSpeed = 0.50f;
+        while(vignette.intensity.value < 0.5f)
+        {
+            vignette.intensity.value += vignetteFadeSpeed * Time.unscaledDeltaTime;
+            yield return null;
         }
     }
 

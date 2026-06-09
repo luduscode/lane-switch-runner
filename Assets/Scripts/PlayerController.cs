@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip[] laneSwitchGrunts;
     public AudioClip[] jumpGrunts;
     public AudioClip[] deathGruntClips;
+    public AudioClip landingClip;
     public float laneSwitchPitch = 1.35f;
 
     [Header("Lane Settings")]
@@ -216,6 +217,14 @@ public class PlayerController : MonoBehaviour
             {
                 explosion.Explode();
             }
+        }
+    }
+
+    void PlayLandingSound()
+    {
+        if(laneSwitchAudioSource != null && landingClip != null)
+        {
+            laneSwitchAudioSource.PlayOneShot(landingClip);
         }
     }
 
