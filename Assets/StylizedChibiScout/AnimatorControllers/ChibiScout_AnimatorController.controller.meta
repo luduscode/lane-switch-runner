@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 00e213a176853f64c850b1e94131e76d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 383166
+  packageName: Stylized Chibi Scout Character
+  packageVersion: 1.0
+  assetPath: Assets/StylizedChibiScout/AnimatorControllers/ChibiScout_AnimatorController.controller
+  uploadId: 924576

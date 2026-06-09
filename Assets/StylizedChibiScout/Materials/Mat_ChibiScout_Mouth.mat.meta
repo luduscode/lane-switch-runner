@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7c6818a111b3fd94d93914e957645819
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 383166
+  packageName: Stylized Chibi Scout Character
+  packageVersion: 1.0
+  assetPath: Assets/StylizedChibiScout/Materials/Mat_ChibiScout_Mouth.mat
+  uploadId: 924576

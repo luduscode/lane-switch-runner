@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: b94a535f8e0eac14b85a343c73370ae7
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 383166
+  packageName: Stylized Chibi Scout Character
+  packageVersion: 1.0
+  assetPath: Assets/StylizedChibiScout/Materials/ShaderGraphs/ShGr_ChibiScout_Mouth.shadergraph
+  uploadId: 924576

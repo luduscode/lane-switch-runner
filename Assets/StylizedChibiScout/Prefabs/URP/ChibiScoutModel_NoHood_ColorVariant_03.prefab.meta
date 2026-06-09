@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 9bc11608126bb2c4b963b83b9d4570bc
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 383166
+  packageName: Stylized Chibi Scout Character
+  packageVersion: 1.0
+  assetPath: Assets/StylizedChibiScout/Prefabs/URP/ChibiScoutModel_NoHood_ColorVariant_03.prefab
+  uploadId: 924576

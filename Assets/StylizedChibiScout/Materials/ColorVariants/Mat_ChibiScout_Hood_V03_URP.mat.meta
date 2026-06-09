@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4eba5fbe7cc607d46880bd3b97ba3a3f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 383166
+  packageName: Stylized Chibi Scout Character
+  packageVersion: 1.0
+  assetPath: Assets/StylizedChibiScout/Materials/ColorVariants/Mat_ChibiScout_Hood_V03_URP.mat
+  uploadId: 924576
