@@ -120,8 +120,8 @@ public class GameManager : MonoBehaviour
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
-            gameOverFinalScoreText.text = "Score: " + score;
-            gameOverHighScoreText.text = "Best: " + bestScore;
+            gameOverFinalScoreText.text = ((int)score).ToString();
+            gameOverHighScoreText.text = bestScore.ToString();
         }
     }
 
