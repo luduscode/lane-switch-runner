@@ -30,7 +30,9 @@ public class GameManager : MonoBehaviour
     [Header("Audio")]
     public AudioSource musicSource;
     public AudioSource gameOverAudioSource;
+    public AudioSource buttonAudioSource;
     public AudioClip gameOverMusicClip;
+    public AudioClip buttonClickClip;
 
     [Header("Start Fade")]
     public CanvasGroup startPanelCanvasGroup;
@@ -110,6 +112,8 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         StartCoroutine(StartGameRoutine());
+
+        PlayButtonClickSound();
     }
 
     public void GameOver()
@@ -133,7 +137,13 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ShowGameOverAfterDelay());
     }
 
-
+    void PlayButtonClickSound()
+    {
+        if(buttonAudioSource != null && buttonClickClip != null)
+        {
+            buttonAudioSource.PlayOneShot(buttonClickClip);
+        }
+    }
 
     void PlayGameOverMusic()
     {
@@ -240,6 +250,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        PlayButtonClickSound();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
