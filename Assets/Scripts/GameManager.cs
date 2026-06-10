@@ -32,12 +32,19 @@ public class GameManager : MonoBehaviour
     public AudioSource gameOverAudioSource;
     public AudioClip gameOverMusicClip;
 
+    [Header("Start Fade")]
+    public CanvasGroup startPanelCanvasGroup;
+    public CanvasGroup fadeCanvasGroup;
+    public float fadeDuration = 0.5f;
+
     private float score;
     private int bestScore;
     private PlayerController playerController;
 
     public Volume globalVolume;
     private Vignette vignette;
+
+    public float gameOverDelay = 1.2f;
 
     void Awake()
     {
@@ -102,22 +109,13 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        gameStarted = true;
-
-        if (startPanel != null)
-            startPanel.SetActive(false);
-
-        if (healthBar != null)
-            healthUI.SetActive(true);
-
-        if (musicSource != null)
-            musicSource.Play();
-
-        Time.timeScale = 1f; // start game
+        StartCoroutine(StartGameRoutine());
     }
 
     public void GameOver()
     {
+        if (IsGameOver) return;
+
         IsGameOver = true;
 
         int finalScore = Mathf.FloorToInt(score);
@@ -132,6 +130,89 @@ public class GameManager : MonoBehaviour
         if (musicSource != null && musicSource.isPlaying)
             musicSource.Stop();
 
+        StartCoroutine(ShowGameOverAfterDelay());
+    }
+
+
+
+    void PlayGameOverMusic()
+    {
+        if(gameOverAudioSource != null && gameOverMusicClip != null)
+        {
+            gameOverAudioSource.PlayOneShot(gameOverMusicClip);
+        }
+    }
+
+    IEnumerator StartGameRoutine()
+    {
+        // prevent double taps
+        if (startPanelCanvasGroup != null)
+        {
+            startPanelCanvasGroup.interactable = false;
+            startPanelCanvasGroup.blocksRaycasts = false;
+            startPanelCanvasGroup.alpha = 1f; // keep title visible while fading to black
+        }
+
+        if (fadeCanvasGroup != null)
+        {
+            fadeCanvasGroup.alpha = 0f;
+            fadeCanvasGroup.blocksRaycasts = true;
+        }
+
+        // Fade TO black over the title screen
+        float timer = 0f;
+
+        while (timer < fadeDuration)
+        {
+            timer += Time.unscaledDeltaTime;
+
+            if (fadeCanvasGroup != null)
+                fadeCanvasGroup.alpha = Mathf.Lerp(0f, 1f, timer / fadeDuration);
+
+            yield return null;
+        }
+
+        if (fadeCanvasGroup != null)
+            fadeCanvasGroup.alpha = 1f;
+
+        // Now screen is fully black. Switch from title to gameplay.
+        if (startPanel != null)
+            startPanel.SetActive(false);
+
+        gameStarted = true;
+
+        if (healthUI != null)
+            healthUI.SetActive(true);
+
+        if (musicSource != null)
+            musicSource.Play();
+
+        Time.timeScale = 1f;
+
+        // Fade FROM black into gameplay
+        timer = 0f;
+
+        while (timer < fadeDuration)
+        {
+            timer += Time.unscaledDeltaTime;
+
+            if (fadeCanvasGroup != null)
+                fadeCanvasGroup.alpha = Mathf.Lerp(1f, 0f, timer / fadeDuration);
+
+            yield return null;
+        }
+
+        if (fadeCanvasGroup != null)
+        {
+            fadeCanvasGroup.alpha = 0f;
+            fadeCanvasGroup.blocksRaycasts = false;
+        }
+    }
+
+    IEnumerator ShowGameOverAfterDelay()
+    {
+        yield return new WaitForSecondsRealtime(gameOverDelay);
+
         PlayGameOverMusic();
 
         if (gameOverPanel != null)
@@ -141,17 +222,9 @@ public class GameManager : MonoBehaviour
             gameOverHighScoreText.text = bestScore.ToString();
         }
 
-        if(vignette != null)
+        if (vignette != null)
         {
             StartCoroutine(FadeVignette());
-        }
-    }
-
-    void PlayGameOverMusic()
-    {
-        if(gameOverAudioSource != null && gameOverMusicClip != null)
-        {
-            gameOverAudioSource.PlayOneShot(gameOverMusicClip);
         }
     }
 
